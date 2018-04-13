@@ -3,13 +3,13 @@ variable "description" {
   default     = ""
 }
 
-variable "zone_name" {
-  description = "Zone name."
+variable "domain" {
+  description = "DNS domain zone"
 }
 
 variable "records" {
   type = "map"
-  description = "List of DNS Records values to add to the DNS zone"
+  description = "List of DNS Records to add to the DNS zone"
   default = {
     names = []
     types = []
@@ -20,7 +20,7 @@ variable "records" {
 
 variable "alias" {
   type = "map"
-  description = "List of DNS Records types to add to the DNS zone"
+  description = "List of DNS Aliases to add to the DNS zone"
   default = {
     names = []
     values = []

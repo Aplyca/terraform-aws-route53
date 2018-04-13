@@ -2,7 +2,7 @@
 # CREATE Route53 record for the instance
 # --------------------------------------------------------
 resource "aws_route53_zone" "this" {
-  name = "${var.zone_name}"
+  name = "${var.domain}"
   comment = "${var.description}"
 }
 
@@ -10,7 +10,7 @@ resource "aws_route53_zone" "this" {
 resource "aws_route53_record" "this" {
   count = "${length(var.records["names"])}"
   zone_id = "${aws_route53_zone.this.zone_id}"
-  name = "${element(var.records["names"], count.index)}${var.zone_name}"
+  name = "${element(var.records["names"], count.index)}${var.domain}"
   type = "${element(var.records["types"], count.index)}"
   ttl = "${element(var.records["ttls"], count.index)}"
   records = ["${split(",", element(var.records["values"], count.index))}"]
@@ -19,7 +19,7 @@ resource "aws_route53_record" "this" {
 resource "aws_route53_record" "alias" {
   count = "${length(var.alias["names"])}"
   zone_id = "${aws_route53_zone.this.zone_id}"
-  name = "${element(var.alias["names"], count.index)}${var.zone_name}"
+  name = "${element(var.alias["names"], count.index)}${var.domain}"
   type = "A"
 
   alias {
