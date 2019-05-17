@@ -3,7 +3,6 @@ output "zone_id" {
 }
 
 output "ns_servers" {
-  #value = "${aws_route53_zone.this.name_servers}"
   value = "${aws_route53_zone.this.*.name_servers}"
   depends_on  = ["aws_route53_zone.this"]
 }
