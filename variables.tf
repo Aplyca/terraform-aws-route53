@@ -7,6 +7,12 @@ variable "domain" {
   description = "DNS domain zone"
 }
 
+variable "zone_id" {
+  description = "Imported Zone ID when Available"
+  default     = "false"
+}
+
+
 variable "records" {
   type = "map"
   description = "List of DNS Records to add to the DNS zone"
