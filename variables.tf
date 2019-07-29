@@ -14,7 +14,7 @@ variable "zone_id" {
 
 
 variable "records" {
-  type = "map"
+  type = any
   description = "List of DNS Records to add to the DNS zone"
   default = {
     names = []
@@ -25,7 +25,7 @@ variable "records" {
 }
 
 variable "alias" {
-  type = "map"
+  type = any
   description = "List of DNS Aliases to add to the DNS zone"
   default = {
     names = []

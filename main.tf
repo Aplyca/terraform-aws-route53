@@ -10,17 +10,17 @@ resource "aws_route53_zone" "this" {
 resource "aws_route53_record" "this" {
   depends_on  = ["aws_route53_zone.this"]
   count = "${var.zone_id == "false" && length(var.records["names"]) > 0 ? length(var.records["names"]) : 0}"
-  zone_id = "${var.zone_id != "false" ? var.zone_id : aws_route53_zone.this.zone_id}"
+  zone_id = "${var.zone_id != "false" ? var.zone_id : aws_route53_zone.this.0.zone_id}"
   name = "${element(var.records["names"], count.index)}${var.domain}"
   type = "${element(var.records["types"], count.index)}"
   ttl = "${element(var.records["ttls"], count.index)}"
-  records = ["${split(",", element(var.records["values"], count.index))}"]
+  records = "${split(",", element(var.records["values"], count.index))}"
 }
 
 resource "aws_route53_record" "alias" {
   depends_on  = ["aws_route53_zone.this"]
   count = "${var.zone_id == "false" && length(var.alias["names"]) > 0 ? length(var.alias["names"]) : 0}"
-  zone_id = "${var.zone_id != "false" ? var.zone_id : aws_route53_zone.this.zone_id}"
+  zone_id = "${var.zone_id != "false" ? var.zone_id : aws_route53_zone.this.0.zone_id}"
   name = "${element(var.alias["names"], count.index)}${var.domain}"
   type = "A"
 
@@ -38,7 +38,7 @@ resource "aws_route53_record" "imported" {
   name = "${element(var.records["names"], count.index)}${var.domain}"
   type = "${element(var.records["types"], count.index)}"
   ttl = "${element(var.records["ttls"], count.index)}"
-  records = ["${split(",", element(var.records["values"], count.index))}"]
+  records = "${split(",", element(var.records["values"], count.index))}"
 }
 
 resource "aws_route53_record" "alias_imported" {
